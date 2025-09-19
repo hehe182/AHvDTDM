@@ -1,0 +1,22 @@
+#---Bai 4
+def caesar_encrypt_preserve (text, shift):
+  result = []
+  for i, ch in enumerate(text) :
+    if ch.isalpha():
+      base = ord('A') if ch. iupper() else ord('a')
+      new_ch = chr((ord(ch) - base + shift) %26 + base)
+      print(f"pos {i:02d}: '{ch}' -> '{new_ch}'")
+      result.append(new_ch)
+    else:
+      print(f"pos {i:02d}: '{ch}' không phải chữ -> giữ nguyên")
+      result.append(ch)
+  return ''.join(result)
+  plaintext = "Attack at dawn! 123"
+  print("Bản rõ:", plaintext, "\n")
+  shift = -7
+  cipher = caesar_encrypt_preserve(plaintext, shift)
+  print ("\nBản mã:", cipher)
+
+  print("\n--- Giải mã lại ---")
+  recovered = caesar_encrypt_preserve(cipher, -shift)
+  print("Bản rõ được phục hồi:", recovered)
