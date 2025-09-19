@@ -1,0 +1,19 @@
+#---Bai 2
+
+def caesar_decrypt_char(ch, shift) :
+  return caesar_encrypt_char(ch, -shift)
+
+def caesar_decrypt(ciphertext, shift) :
+  print (f"Shift để giải mã = {shift} (tức dịch ngược bằng {-shift})")
+  plain_chars = []
+  for idx, ch in enumerate(ciphertext):
+    dec = caesar_decrypt_char(ch, shift)
+    print(f"pos {idx:02d} : '{ch}' -> '{dec}'")
+    plain_chars.append(dec)
+  plaintext = "".join(plain_chars)
+  print("\nBản rõ phục hồi:", plaintext)
+  return plaintext
+
+ciphertext = "MJQQT, BTWQI!"
+print("Bản mã:", ciphertext, "\n")
+plain = caesar_decrypt(ciphertext, 5)
