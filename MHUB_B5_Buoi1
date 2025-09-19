@@ -1,0 +1,40 @@
+#---Bai 5
+from collections import Counter
+import random
+
+def caesar_encrypt_simple(text, shift):
+  return ''.join(caesar_encrypt_char(ch, shift) for ch in text)
+
+plaintext = ("THIS IS A DEMONSTRATION OF THE CAESAR CIPHER." "WE WILL ENCODE THIS LONGER MESSAGE SO FREQUENCY ANALYSIS " "HAS A CHANCE TO WORK. FREQUENCY OF LETTERS HELPS GUESS SHIFT.")
+print("Plaintext (original):")
+print(plaintext, "\n")
+
+hidden_shift = random.randint(1, 25)
+ciphertexxt = caesar_encrypt_simple(plaintext, hidden_shift)
+print(f"(Trên thực tế code đã dùng shift bí mật = {hidden_shift} để sinh bản mã)\n")
+print ("Ciphertext:")
+print(ciphertext, "\n")
+
+only_letters = ''.join(ch for ch in ciphertext if ch.isalpha()).upper()
+freq = Counter(only_letters)
+print("Tần suất ký tự trong bản mã (giảm dần):")
+for ch, cnt in freq.most_common():
+  print((f" {ch}: {cnt}"))
+
+most_common_cipher_letter, _ = freq.most_common(1) [0]
+assmued_plain_most = 'E'
+guessed_shift = (ord(most_common_cipher_letter) - ord(assmued_plain_most)) % 26
+print(f"\nChữ xuất hiện nhiều nhất trong bản mã: '{most_common_cipher_letter}'")
+print(f"Giả sử chữ tương ứng trong bản rõ là '{assmued_plain_most}' => ước lượng shift = {guessed_shift}")
+
+guessed_plain_by_freq = caesar_encrypt_simple(ciphertext, - guessed_shift)
+print("\nKết quả giải mã theo ước lượng tần suất:")
+print(guessed_plain_by_freq)
+
+print("\n--- Brute-force (tất cả 26 shift) để đối chiếu ---")
+for s in range(26):
+  candidate = caesar_encrypt_simple(ciphertext, -s)
+  marker = "<= guessed" if s == guessed_shift else ""
+  print(f"shift {s:02d}: {candidate} {marker}")
+
+  print(f"\n(Ghi chú: shift thực tế dùng để sinh bản mà là {hidden_shift})")
